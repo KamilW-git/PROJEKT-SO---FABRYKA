@@ -27,4 +27,3 @@ set(HEADERS
 add_executable(Fabryka ${SOURCES} ${HEADERS})
 target_include_directories(Fabryka PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
-
