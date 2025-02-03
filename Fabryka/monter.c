@@ -7,18 +7,35 @@
 
 void proces_montera(int id) {
     while (1) {
-        if (odbierz_wiadomosc() == 2 || odbierz_wiadomosc() == 3 || odbierz_wiadomosc() == 4) {
+        // Sprawdź, czy jest polecenie zamknięcia (3 lub 4)
+        int polecenie = odbierz_wiadomosc();
+        if (polecenie == 3 || polecenie == 4) {
             printf("Monter %d: Kończę pracę.\n", id);
             break;
         }
 
+        // Sprawdź, czy fabryka jest aktywna
+        if (!pamiec->fabryka_aktywna) {
+            printf("Monter %d: Fabryka zatrzymana, czekam...\n", id);
+            sleep(2);
+            continue;
+        }
+
+        // Sprawdź, czy magazyn jest otwarty
         if (pamiec->magazyn_otwarty) {
-            int podzespoly[3];
-            if (pobierz_podzespoly_z_magazynu(podzespoly)) {
-                printf("Monter %d: Wyprodukowano produkt!\n", id);
+            // Sekcja krytyczna: dostęp do magazynu
+            czekaj_na_semaforze(); // Zablokuj semafor
+            if (pobierz_podzespoly_z_magazynu()) {
+                printf("Monter %d: Pobrano podzespoły X, Y, Z\n", id);
+                sygnalizuj_semafor(); // Odblokuj semafor
+
+                // Symulacja przenoszenia i montowania
+                printf("Monter %d: Przenoszę podzespoły na stanowisko %c...\n", id, 'A' + id);
                 sleep(2);
+                printf("Monter %d: Wyprodukowano produkt!\n", id);
             } else {
-                printf("Monter %d: Brak podzespołów!\n", id);
+                sygnalizuj_semafor(); // Odblokuj semafor
+                printf("Monter %d: Brak podzespołów w magazynie!\n", id);
             }
         }
 

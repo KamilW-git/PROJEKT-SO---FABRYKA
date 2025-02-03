@@ -1,8 +1,9 @@
 #include "semafor.h"
 #include <sys/ipc.h>
 #include <sys/sem.h>
+#include <stdio.h>
 
-int sem_id;
+
 
 void inicjalizuj_semafor() {
     sem_id = semget(IPC_PRIVATE, 1, 0666);

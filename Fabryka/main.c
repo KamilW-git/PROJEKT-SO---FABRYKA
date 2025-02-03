@@ -32,6 +32,8 @@ int main() {
 
     // Uruchom proces dyrektora
     proces_dyrektora();
+    printf("[DEBUG] Wysyłam sygnał SIGTERM do wszystkich procesów...\n");
+    kill(0, SIGTERM); // Zabija wszystkie procesy potomne
 
     // Czekaj na zakończenie procesów potomnych
     while (wait(NULL) > 0);

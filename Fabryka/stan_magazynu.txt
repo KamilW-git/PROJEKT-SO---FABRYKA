@@ -1,0 +1,2 @@
+Stan magazynu: 6 jednostek
+Podzespoły: X=1, Y=1, Z=1
