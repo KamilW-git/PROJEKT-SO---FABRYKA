@@ -45,7 +45,7 @@ Proces zarządzający pracą magazynu i fabryki.
 //Specyfikacja techniczna
 
 Język programowania: C
-Narzędzia i biblioteki: pthreads
+Narzędzia i biblioteki: procesy
 
 //Struktura programu:
 
