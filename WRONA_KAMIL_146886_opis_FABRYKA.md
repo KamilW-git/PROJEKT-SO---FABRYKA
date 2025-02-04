@@ -68,6 +68,5 @@ Test 3: Równoczesne zakończenie pracy fabryki i magazynu:
 
 Testy dla polecenia_3 i polecenia_4.
 
-Test 4: Nieprzewidywalne opóźnienia dostaw:
+Test 4: Dzialanie polecenia (5) i polecenia (6), ktore odpowiednio wznawiaja prace magazynu i wznawiaja prace fabryki 
 
-Dostawy są realizowane w losowych momentach.
