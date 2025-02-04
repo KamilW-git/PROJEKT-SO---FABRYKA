@@ -1,2 +1,2 @@
-Stan magazynu: 6 jednostek
-Podzespoły: X=1, Y=1, Z=1
+Jednostki magazynowe: 100
+Podzespoły: X=18, Y=17, Z=16

@@ -3,6 +3,7 @@
 #include <sys/shm.h>
 #include <sys/sem.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int shm_id;
 struct pamiec_dzielona *pamiec;
@@ -21,6 +22,9 @@ void inicjalizuj_pamiec_dzielona() {
     // Inicjalizacja semafora
     sem_id = semget(IPC_PRIVATE, 1, 0666);
     semctl(sem_id, 0, SETVAL, 1); // Ustaw wartość początkową na 1
+
+    // Wczytaj stan magazynu z pliku (jeśli istnieje)
+    wczytaj_stan_magazynu();
 }
 
 void wyczysc_pamiec_dzielona() {
@@ -56,7 +60,37 @@ void zapisz_stan_magazynu() {
         perror("Błąd podczas otwierania pliku");
         return;
     }
-    fprintf(plik, "Stan magazynu: %d jednostek\n", pamiec->jednostki_magazynowe);
+    fprintf(plik, "Jednostki magazynowe: %d\n", pamiec->jednostki_magazynowe);
     fprintf(plik, "Podzespoły: X=%d, Y=%d, Z=%d\n", pamiec->podzespoly[0], pamiec->podzespoly[1], pamiec->podzespoly[2]);
+    fclose(plik);
+}
+
+void wczytaj_stan_magazynu() {
+    FILE *plik = fopen("stan_magazynu.txt", "r");
+    if (plik == NULL) {
+        printf("[INFO] Brak pliku stanu magazynu. Używam stanu domyślnego.\n");
+        return;
+    }
+
+    // Wczytaj dane z pliku
+    int wczytane = fscanf(plik, "Jednostki magazynowe: %d\nPodzespoły: X=%d, Y=%d, Z=%d\n",
+                          &pamiec->jednostki_magazynowe,
+                          &pamiec->podzespoly[0],
+                          &pamiec->podzespoly[1],
+                          &pamiec->podzespoly[2]);
+
+    if (wczytane != 4) {
+        printf("[BŁĄD] Nie udało się wczytać pełnego stanu magazynu z pliku.\n");
+        // Przywróć stan domyślny
+        pamiec->jednostki_magazynowe = 0;
+        pamiec->podzespoly[0] = 0;
+        pamiec->podzespoly[1] = 0;
+        pamiec->podzespoly[2] = 0;
+    } else {
+        printf("[INFO] Wczytano stan magazynu z pliku:\n");
+        printf("  Jednostki magazynowe: %d\n", pamiec->jednostki_magazynowe);
+        printf("  Podzespoły: X=%d, Y=%d, Z=%d\n", pamiec->podzespoly[0], pamiec->podzespoly[1], pamiec->podzespoly[2]);
+    }
+
     fclose(plik);
 }

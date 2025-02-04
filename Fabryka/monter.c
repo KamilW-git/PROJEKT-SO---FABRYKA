@@ -10,13 +10,19 @@ void proces_montera(int id) {
         // Sprawdź, czy jest polecenie zamknięcia (3 lub 4)
         int polecenie = odbierz_wiadomosc();
         if (polecenie == 3 || polecenie == 4) {
-            printf("Monter %d: Kończę pracę.\n", id);
+            printf("\033[1;35mMonter %d\033[0m: \033[1;30mKończę pracę.\033[0m\n", id);
             break;
         }
 
         // Sprawdź, czy fabryka jest aktywna
         if (!pamiec->fabryka_aktywna) {
-            printf("Monter %d: Fabryka zatrzymana, czekam...\n", id);
+            printf("\033[1;35mMonter %d\033[0m: Fabryka zatrzymana, czekam...\n", id);
+            sleep(2);
+            continue;
+        }
+
+        if (!pamiec->magazyn_otwarty) {
+            printf("\033[1;35mMonter %d\033[0m: Magazyn zamknięty, nie mam jak pobrać podzespołów...\n", id);
             sleep(2);
             continue;
         }
@@ -26,16 +32,16 @@ void proces_montera(int id) {
             // Sekcja krytyczna: dostęp do magazynu
             czekaj_na_semaforze(); // Zablokuj semafor
             if (pobierz_podzespoly_z_magazynu()) {
-                printf("Monter %d: Pobrano podzespoły X, Y, Z\n", id);
+                printf("\033[1;35mMonter %d\033[0m: Pobrano podzespoły X, Y, Z\n", id);
                 sygnalizuj_semafor(); // Odblokuj semafor
 
                 // Symulacja przenoszenia i montowania
-                printf("Monter %d: Przenoszę podzespoły na stanowisko %c...\n", id, 'A' + id);
+                printf("\033[1;35mMonter %d\033[0m: Przenoszę podzespoły na stanowisko %c...\n", id, 'A' + id);
                 sleep(2);
-                printf("Monter %d: Wyprodukowano produkt!\n", id);
+                printf("\033[1;35mMonter %d\033[0m: \033[1;32mWyprodukowano produkt!\033[0m\n", id);
             } else {
                 sygnalizuj_semafor(); // Odblokuj semafor
-                printf("Monter %d: Brak podzespołów w magazynie!\n", id);
+                printf("\033[1;35mMonter %d\033[0m: \033[1;31mBrak podzespołów w magazynie!\033[0m\n", id);
             }
         }
 

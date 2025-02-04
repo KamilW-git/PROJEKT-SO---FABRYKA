@@ -26,5 +26,6 @@ int sprawdz_miejsce_w_magazynie(int rozmiar);
 void dodaj_podzespol_do_magazynu(int typ, int rozmiar);
 int pobierz_podzespoly_z_magazynu();
 void zapisz_stan_magazynu();
+void wczytaj_stan_magazynu();
 
 #endif

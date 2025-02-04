@@ -8,7 +8,7 @@
 void proces_dyrektora() {
     char input;
     while (1) {
-        printf("\nDyrektor: wprowadź polecenie (1-6): ");
+        printf("\nDyrektor: wprowadź polecenie (1-6): \n");
         if (scanf(" %c", &input) != 1) {
             while (getchar() != '\n');
             continue;
@@ -46,7 +46,7 @@ void proces_dyrektora() {
             pamiec->fabryka_aktywna = 1;
             break;
             default:
-                printf("[BŁĄD] Nieprawidłowe polecenie!\n");
+                printf("\033[1;31m[BŁĄD] Nieprawidłowe polecenie!\033[0m\n");
         }
     }
 }
