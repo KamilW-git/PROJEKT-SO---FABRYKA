@@ -1,2 +1,2 @@
-Jednostki magazynowe: 100
-Podzespoły: X=18, Y=17, Z=16
+Jednostki magazynowe: 36
+Podzespoły: X=6, Y=6, Z=6

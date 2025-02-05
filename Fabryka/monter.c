@@ -6,6 +6,8 @@
 #include "semafor.h"
 
 void proces_montera(int id) {
+
+    int licznik=0;
     while (1) {
         // Sprawdź, czy jest polecenie zamknięcia (3 lub 4)
         int polecenie = odbierz_wiadomosc();
@@ -38,7 +40,10 @@ void proces_montera(int id) {
                 // Symulacja przenoszenia i montowania
                 printf("\033[1;35mMonter %d\033[0m: Przenoszę podzespoły na stanowisko %c...\n", id, 'A' + id);
                 sleep(2);
-                printf("\033[1;35mMonter %d\033[0m: \033[1;32mWyprodukowano produkt!\033[0m\n", id);
+                licznik++;
+                printf("\033[1;35mMonter %d\033[0m: \033[1;32mWyprodukowano produkt! = %d\033[0m\n", id, licznik);
+
+
             } else {
                 sygnalizuj_semafor(); // Odblokuj semafor
                 printf("\033[1;35mMonter %d\033[0m: \033[1;31mBrak podzespołów w magazynie!\033[0m\n", id);

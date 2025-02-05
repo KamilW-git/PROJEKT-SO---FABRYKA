@@ -80,7 +80,7 @@ void wczytaj_stan_magazynu() {
                           &pamiec->podzespoly[2]);
 
     if (wczytane != 4) {
-        printf("[BŁĄD] Nie udało się wczytać pełnego stanu magazynu z pliku.\n");
+        printf("[BŁĄD] Nie udałSo się wczytać pełnego stanu magazynu z pliku.\n");
         // Przywróć stan domyślny
         pamiec->jednostki_magazynowe = 0;
         pamiec->podzespoly[0] = 0;
